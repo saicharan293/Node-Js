@@ -1,0 +1,64 @@
+To install express: npm i express
+
+To run script.js(js file): node -script.js-file-name
+Express:
+--------
+-> To create routes, servers(3000)
+eg: app.get()    -> routes
+    app.listen() -> server
+
+->To run routes on automate:
+ 
+ npm i nodemon -g
+ run: nodemon -script.js-file-name/
+    npx nodemon -script.js-file-name
+
+Middle-ware:
+------------
+-> app.get(function()):
+e.g:
+    app.use(function (req, res, next) {
+        console.log("middle ware shuru hua");
+        next();
+    });
+    middle ware starts , then to routes
+
+
+-> next(): to allow routes functioning
+-> Remarks: try to get other method to acess middle ware
+
+Error handling from express js website:
+------------------------------------
+Error in website
+----------------
+
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something in middle ware!')
+  })
+
+Console-error handling:
+----------------------
+app.get('/about',function(req,res,next){
+    return next(new Error('something went wrong'))
+})
+
+Form handling:
+--------------
+run: npm i cookie-parser
+
+brief-idea:
+
+    data present in frontend page is presented on browser, if there is any request from backend, that data automatically is transfered to backend
+
+->session: the process of routing and etc that carry cooking all the way(login, logout)
+->cookie: the data that is stored in frontend page
+->blob: mixed data from front-end to back-end(or server) couldn't be readible
+    
+//blob for backend
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+
+
+
+
