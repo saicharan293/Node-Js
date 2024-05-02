@@ -1,0 +1,60 @@
+project:
+--------
+
+package.json-installation: 
+    npm init -y
+
+express-installation:
+    npm i express
+
+setting up parsers for form-handling:
+    create index.js
+        app.use(express.json());
+        app.use(express.urlencoded({extended:true}));
+
+setting up ejs for ejs pages(frontend pages):
+
+    ejs-installation: 
+        npm i ejs
+    set up ejs as a view engine:
+        //ejs setup
+        app.set('view engine','ejs')
+
+        ->create 'views' folder in project
+            create 'index.ejs': functions as html page
+
+        ->render: index.ejs page in index.js by adjusting the route
+            app.get('/',function(req,res){
+                res.render('index')
+            })
+        
+        ->dynamic-calculations:
+            <%= 2+2 %>
+
+setting up public static files: css, js, images
+    const path=require('path')
+    app.use(express.static(path.join(__dirname,'public')));
+
+    ->create 'public' folder in project
+        ->create 'stylesheets','javascripts','images' folders in public
+    ->create 'style.css' in 'stylesheets' folder and try to apply some css
+    ->create 'script.js' in 'javascripts' folder and try some alert('hey') to check 
+
+dynamic routing: minimal changes in route
+---------------
+    /profile/sai
+    /profile/charan
+
+eg:     app.get('/profile/:username',function(req,res){
+            res.send(`welcome, ${req.params.username}`)
+        })
+
+    /author/sai/23
+    /author/charan/24
+
+eg: 
+        app.get('/author/:username/:age',function(req,res){
+            res.send(`welcome, ${req.params.username} of ${req.params.age} years old`); 
+        })
+
+
