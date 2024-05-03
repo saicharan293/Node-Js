@@ -1,3 +1,5 @@
+package.json: npm init -y
+
 To install express: npm i express
 
 To run script.js(js file): node -script.js-file-name
@@ -66,7 +68,86 @@ TYPES OF DBS - SQL | NoSQL
 SQL   - data stored in form of tables
 NoSQL - data stored in form of objects(Mongo DB)
 
+------------------------------------------------------------------------------------
+npm init -y
 
+npm i express
+
+npm i mongoose
+
+create app.js
+---------------
+    -> app.get()
+    -> app.listen()
+
+
+create usermodel.js :
+--------------------
+
+    const mongoose=require('mongoose');
+
+    mongoose.connect(`mongodb://127.0.0.1:27017/mongopractice`)
+
+    const userSchema = mongoose.Schema({
+        name: String,
+        username: String,
+        email:String
+    })
+
+    module.exports=mongoose.model('user',userSchema)
+
+app.js(CRUD)
+------
+
+    create:
+    ------
+        const userModel= require('./usermodel')
+
+        app.get('/create', async(req,res)=>{
+            let createduser= await userModel.create({
+                name:'sai',
+                email:'sai@gmail.com',
+                username:'sai'
+            })
+            // console.log('create route hey')
+            res.send(createduser)
+        })
+
+    update:
+    -------
+        //update
+        app.get('/update', async(req,res)=>{
+            let updatedUser=await userModel.findOneAndUpdate({username:'sai'},{name:'sai charan'},{new : true})
+            // console.log('create route hey')
+            res.send(updatedUser)
+        })
+
+    all-users:
+    ----------
+
+    //read-all
+    app.get('/read',async(req,res)=>{
+        let allusers=await userModel.find()
+        res.send(allusers)
+    })
+
+    read only-one user:
+    -------------------
+
+    //read
+    app.get('/read/name',async(req,res)=>{
+        let allusers=await userModel.findOne({username:'charan'})
+        res.send(allusers)
+    })
+
+    delete:
+    -------
+    
+    //delete
+    app.get('/delete',async(req,res)=>{
+        let deletedUser=await userModel.findOneAndDelete({username:'charan'})
+        res.send(deletedUser)
+    }) 
 
 
 
