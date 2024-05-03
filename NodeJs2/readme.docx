@@ -59,6 +59,14 @@ brief-idea:
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
+storage:
+-------
+TYPES OF DBS - SQL | NoSQL
+
+SQL   - data stored in form of tables
+NoSQL - data stored in form of objects(Mongo DB)
+
+
 
 
 

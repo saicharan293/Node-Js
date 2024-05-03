@@ -1,0 +1,66 @@
+
+
+-> /create:
+-----------
+    app.post('/create',function(req,res){
+        // console.log(req.body);
+        fs.writeFile(`./files/${req.body.title.split(' ').join('')}.txt`,req.body.details,function(err){
+            res.redirect('/')
+        })
+    })
+
+
+     <% if (files.length > 0) { %>
+            <% files.forEach(function(val){ %>
+                <div class="task min-w-72 px-3 py-4 rounded-md bg-zinc-800">
+                <h1 class="text-white text-2xl tracking-tighter">
+                    <%= val %>
+                </h1>
+                <div class="flex justify-between w-full items-center mt-3">
+                  <a href="/files/<%= val %>" class="inline-block text-blue-500">Read more</a>
+                  <a href="/edit/<%= val %>" class="text-zinc-500">edit file name</a>
+                </div>
+                </div>
+            <% }) %> 
+        <% } else { %>
+        <h1 class="text-zinc-600">No tasks added yet.</h1>
+        <% } %>
+
+->/show: /files/:filename:
+---------------------------
+
+    app.get('/files/:filename',function(req,res){
+        fs.readFile(`./files/${req.params.filename}`,"utf-8",function(err,filedata){
+            // console.log(filedata)
+            res.render('show',{filename:req.params.filename,filedata:filedata})
+        })
+    })
+
+     <h1 class="text-4xl tracking-tighter"><%= filename %></h1>
+      <p class="text-xl mt-2"><%= filedata %></p>
+
+-> /edit:
+---------
+
+    app.post('/edit',function(req,res){
+        fs.rename(`./files/${req.body.previous}`,`./files/${req.body.new}`,function(err){
+            console.log(req.body)
+            res.redirect('/')
+        })
+    })
+
+
+    <form action="/edit" method="post">
+            <input
+              class="block w-1/4 rounded-md outline-none px-5 py-2 bg-zinc-800 text-zinc-500"
+              type="text"
+              placeholder="Previous name goes here"
+              name="previous"
+              value="<%= filename %>"
+            />
+            <input
+              class="block mt-2 w-1/4 rounded-md outline-none px-5 py-2 bg-zinc-800"
+              type="text"
+              placeholder="Next name goes here"
+              name="new"
+            />
