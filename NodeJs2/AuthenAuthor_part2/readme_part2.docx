@@ -1,0 +1,42 @@
+npm init -y
+
+npm i express jsonwebtoken bcrypt cookie-parser
+
+npm i ejs
+
+npm i mongoose
+create user account:
+------------------
+
+    mongoose set up
+    schema set up
+    model set up for mongoose user schema
+    password hash
+    jwt token create
+    cookie for jwt token
+
+
+        app.post('/create' ,(req,res)=>{
+            let{name,age,email,password}=req.body;
+            bcrypt.genSalt(10,(err,salt)=>{
+                bcrypt.hash(password,salt,async(err,hash)=>{
+                    // console.log(hash)
+                    let createduser=await userModel.create({
+                        name,age,email,password:hash
+                    })
+                    let token=jwt.sign({email},'shhhhhh');
+                    res.cookie('token app',token)
+                    res.send(createduser)
+                })
+            })
+        })
+
+
+        logout: make the token empty
+        --------
+
+        //? log out
+        app.get('/logout',(req,res)=>{
+            res.cookie('token app','')
+            res.redirect('/')
+        })
