@@ -51,7 +51,8 @@ run: npm i cookie-parser
 
 brief-idea:
 
-    data present in frontend page is presented on browser, if there is any request from backend, that data automatically is transfered to backend
+    data present in frontend page is presented on browser, 
+    if there is any request from backend, that data automatically is transfered to backend
 
 ->session: the process of routing and etc that carry cooking all the way(login, logout)
 ->cookie: the data that is stored in frontend page
@@ -63,9 +64,17 @@ app.use(express.urlencoded({extended:true}))
 
 storage:
 -------
-TYPES OF DBS - SQL | NoSQL
+problem-fix: 
+------------
+->create 'data' folder in 'c' drive
+    ->create 'db' folder in 'data' folder
+    ->cmd->'mongod' and keep it running through entire work
 
-SQL   - data stored in form of tables
+
+TYPES OF DBS = SQL | NoSQL
+-----------
+
+SQL   - data stored in form of tables(My SQL)
 NoSQL - data stored in form of objects(Mongo DB)
 
 ------------------------------------------------------------------------------------
@@ -98,6 +107,12 @@ create usermodel.js :
 
 app.js(CRUD)
 ------
+
+->create:        -model-name.create({items,...})
+->read-all:      -model-name.find()
+->read only-one: -model-name.findOne({})
+->update:        -model-name.findOneAndUpdate({})   
+->delete:        -model-name.findOneAndDelete({id...})
 
     create:
     ------
@@ -150,4 +165,10 @@ app.js(CRUD)
     }) 
 
 
-
+May-5-2024:
+----------
+Authentication and Authorization:
+---------------------------------
+Authentication: user need to provide his/her credentials to log in to home page
+Authorization: user need to be enrolled in the admin panel, so that if user need 
+                to change any imporvisations in that page

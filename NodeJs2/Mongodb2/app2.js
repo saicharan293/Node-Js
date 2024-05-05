@@ -9,11 +9,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 //? home-page
+//? All-users display
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-//? All-users display
 // app.get("/read", (req, res) => {
 //   res.render("read");
 // });

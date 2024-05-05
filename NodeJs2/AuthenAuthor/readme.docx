@@ -1,0 +1,87 @@
+npm init -y
+
+npm i jsonwebtoken bcrypt
+
+npm i express
+
+cookie: the data coming from the server can be stored on browser
+-------
+
+    app.get('/',(req,res)=>{
+        res.cookie('name','sai charan');
+        res.send('cookie created successfully');
+    })
+
+console the cookie: to read the cookies
+------------------
+
+    npm i cookie-parser
+
+    const cookieParser=require('cookie-parser')
+
+    app.use(cookieParser());
+
+    app.get('/read',(req,res)=>{
+        console.log(req.cookies);
+        res.send('read route created');
+    })
+
+bcrypt: for encryption and decryption
+------
+
+   -> const bcrypt=require('bcrypt');
+
+salt: random string
+hash: adjacent characters of password
+.hash(): mix of hash and salt to generate encrypted key
+
+    encryption:
+    ----------
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash("mynameissai", salt, function(err, hash) {
+            // Store hash in your password DB.
+            console.log(hash)
+        });
+    });
+
+    password=mynameissai
+    hash= $2b$10$R8cLKqFGz8e7QhSSDdiQaOiuHKYeJsS6VCBaZONuavjFzIv1giKkW
+
+    check:
+    -----
+
+        app.get('/',(req,res)=>{
+            bcrypt.compare("mynameissai", "$2b$10$R8cLKqFGz8e7QhSSDdiQaOiuHKYeJsS6VCBaZONuavjFzIv1giKkW", function(err, result) {
+                // result == true
+                console.log(result)
+            });
+        })
+
+jwt: jsonwebtoken -> its a string that is stored in the cookie
+----
+
+ npm i jsonwebtoken
+
+ const jwt = require("jsonwebtoken");
+
+    app.get('/',(req,res)=>{
+        let token= jwt.sign('sai@gmail.com','highsecret')
+        //console.log(token)
+        res.cookie('token',token);
+        res.send('cookie generated through jwt')
+    })
+
+    -> read token present in the cookie(not the encrypted data):
+    ------------------------------------
+
+        app.get('/read',(req,res)=>{
+            console.log(req.cookies.token)
+        })
+
+    ->read the data present in token which is saved in cookie:
+      --------------------------------------------------------
+
+        app.get('/read',(req,res)=>{
+            let data=jwt.verify(req.cookies.token,'highsecret');
+            console.log(data)
+        })
