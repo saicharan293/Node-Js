@@ -18,6 +18,8 @@ app.get('/',(req,res)=>{
     res.render('index')
 })
 
+
+//? create
 app.post('/create' ,(req,res)=>{
     let{name,age,email,password}=req.body;
     bcrypt.genSalt(10,(err,salt)=>{
@@ -30,10 +32,36 @@ app.post('/create' ,(req,res)=>{
             let token=jwt.sign({email},'shhhhhh');
             res.cookie('token app',token)
             res.send(createduser)
+            console.log('created ',createduser)
 
         })
     })
 })
+
+app.post('/login',async (req,res)=>{
+    let user=await userModel.findOne({email:req.body.email});
+    if(!user){
+        return res.send('something went wrong')
+    }
+    bcrypt.compare(req.body.password,user.password,(err,result)=>{
+        console.log(result)
+        if(result) {
+            let token=jwt.sign({email:user.email},'shhhhhh');
+            res.cookie('token app',token)
+            res.send('You logged in succesfully');
+        }
+        else{
+            
+            res.send("No, you can't login");
+        } 
+    })
+})
+
+app.get('/login',(req,res)=>{
+    res.render('login')
+})
+
+
 
 //? log out
 app.get('/logout',(req,res)=>{
