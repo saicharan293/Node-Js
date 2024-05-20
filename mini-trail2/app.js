@@ -21,9 +21,10 @@ app.get('/',(req,res)=>{
 app.get('/login',(req,res)=>{
     res.render("login")
 })
-app.get('/profile',isLoggedIn,(req,res)=>{
-    console.log(req.user)
-    res.render("login")
+app.get('/profile',isLoggedIn, async(req,res)=>{
+    let user=await userModel.findOne({email:req.user.email})
+    // console.log(req.user)
+    res.render("profile",{user})
 })
 app.post('/register',async(req,res)=>{
     let{email,age,password,name,username}=req.body;
@@ -55,7 +56,7 @@ app.post('/login',async(req,res)=>{
         if(result) {
             let token=jwt.sign({email:email,userid:user._id},'sai');
             res.cookie('token',token)
-            res.status(200).send('You logged in successfully')
+            res.status(200).redirect('/profile')
         }
         else res.redirect('/login')
     })
@@ -68,7 +69,7 @@ app.get('/logout',(req,res)=>{
 
 // middle ware building for protected routes
 function isLoggedIn(req,res,next){
-    if(req.cookies.token==='') res.send('You must login');
+    if(req.cookies.token==='') res.redirect('/login');
     else{
         let data=jwt.verify(req.cookies.token,'sai')
         req.user=data
