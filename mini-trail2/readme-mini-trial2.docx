@@ -1,0 +1,17 @@
+npm init -y
+
+npm i express
+
+npm i mongoose
+
+npm i jsonwebtoken bcrypt cookie-parser
+
+folder - models => mongo db database
+
+        -> user.js
+
+folder - views => web page
+
+        -> index.ejs
+
+npm i ejs
