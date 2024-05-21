@@ -16,3 +16,5 @@ public -> to store static files such as images
 models -> to create models (userModel, productModel) for mongoose database
 
 utils -> minor adjustments
+
+gkeep => vs code extension
