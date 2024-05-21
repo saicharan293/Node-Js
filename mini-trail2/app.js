@@ -3,10 +3,11 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const bcrypt=require('bcrypt');
 const crypto=require('crypto');
-const multer=require('multer');
+// const multer=require('multer');
 const userModel=require('./models/user');
 const postModel=require('./models/post');
 const path = require('path');
+const multerconfig=require('./config/multerconfig')
 
 const app= express();
 
@@ -14,34 +15,35 @@ const app= express();
 app.set('view engine','ejs')
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(express.static(path.join(__dirname,'public')))
 app.use(cookieParser())
 
 
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './public/images/uploads')
-    },
-    filename: function (req, file, cb) {
-        crypto.randomBytes(12,(err,bytes)=>{
-            const fn=bytes.toString('hex') + path.extname(file.originalname)
-            cb(null, fn)
-        })
-    }
-})
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//       cb(null, './public/images/uploads')
+//     },
+//     filename: function (req, file, cb) {
+//         crypto.randomBytes(12,(err,bytes)=>{
+//             const fn=bytes.toString('hex') + path.extname(file.originalname)
+//             cb(null, fn)
+//         })
+//     }
+// })
   
-const upload = multer({ storage: storage })
+// const upload = multer({ storage: storage })
 
 app.get('/',(req,res)=>{
     res.render("index")
 })
-app.get('/test',(req,res)=>{
-    res.render("test")
-})
-app.post('/upload',upload.single('image'),(req,res)=>{
-    res.send('file uploaded')
-    console.log(req.file)
-})
+// app.get('/test',(req,res)=>{
+//     res.render("test")
+// })
+// app.post('/upload',upload.single('image'),(req,res)=>{
+//     res.send('file uploaded')
+//     console.log(req.file)
+// })
 
 app.get('/login',(req,res)=>{
     res.render("login")
@@ -102,7 +104,7 @@ app.post('/register',async(req,res)=>{
             })
             let token=jwt.sign({email:email,userid:user._id},'sai');
             res.cookie('token',token)
-            res.send('Registered succesffully ')
+            res.redirect('/profile ')
         })
     })
 })
