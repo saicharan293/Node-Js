@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 
 // mongoose.connect('mongodb://127.0.0.1/scatch')
 
-const userSchema=mongoose.Schema({
+const ownerSchema=mongoose.Schema({
     fullname:{
         type:String,
         minLength:3,
@@ -10,17 +10,13 @@ const userSchema=mongoose.Schema({
     },
     email:String,
     password:String,
-    cart:{
-        type:Array,
-        default:[]
-    },
     isadmin:boolean,
-    orders:{
+    products:{
         type:Array,
         default:[]
     },
-    contact: Number,
+    gstn:String,
     picture: String
 })
 
-module.exports=mongoose.model('user',userSchema)
+module.exports=mongoose.model('owner',ownerSchema)
