@@ -18,3 +18,25 @@ models -> to create models (userModel, productModel) for mongoose database
 utils -> minor adjustments
 
 gkeep => vs code extension
+
+userModel
+---------
+
+full name - string
+email - string
+password - string
+cart - array
+isadmin - boolean
+contact - number
+picture - string
+
+productModel:
+-------------
+
+image
+name
+price
+discount
+bgcolor
+textcolor
+panelcolor
