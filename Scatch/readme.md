@@ -19,6 +19,8 @@ utils -> minor adjustments
 
 gkeep => vs code extension
 
+npm i debug => for debugging instead of console
+
 userModel
 ---------
 
