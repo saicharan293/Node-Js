@@ -14,7 +14,6 @@ const userSchema=mongoose.Schema({
         type:Array,
         default:[]
     },
-    is_admin:Boolean,
     orders:{
         type:Array,
         default:[]
