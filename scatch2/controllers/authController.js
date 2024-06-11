@@ -47,3 +47,7 @@ module.exports.loginUser=async(req,res)=>{
     })
 }
 
+module.exports.logout=async(req,res)=>{
+    res.cookie('token','')
+    res.redirect('/')
+}
