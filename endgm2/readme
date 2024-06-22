@@ -16,4 +16,9 @@ const { routes } = require("./app")
     multiple flashes:
     console.log(req.flash('age'),req.flash('name'))
 
+Mongoose connection:
+-------------------
+
+    -> npm i mongoose
+
 
