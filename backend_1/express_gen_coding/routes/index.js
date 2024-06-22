@@ -4,8 +4,39 @@ const userModel = require("./users");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  // req.session.mysession=true;
+  res.cookie('cookie ka age',123)
   res.render("index");
 });
+
+//check cookie
+router.get('/readcookie',(req,res,next)=>{
+  res.send(req.cookies['cookie ka age'])
+})
+//delete cookie
+router.get('/deletecookie',(req,res,next)=>{
+  res.clearCookie('cookie ka age')
+  res.send('cookie is clear')
+})
+
+//check session
+router.get('/checksession',(req,res,next)=>{
+  if(req.session.mysession){
+    res.send('you are banned')
+  }
+  else {
+    res.send('not banned yet')
+  }
+})
+
+//remove session
+router.get('/removesession',(req,res,next)=>{
+  req.session.destroy(function(err){
+    if (err) throw err;
+    // console.log(err);
+    res.send('session removed')
+  })
+})
 
 //create user
 router.get("/create", async function (req, res, next) {

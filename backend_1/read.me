@@ -22,3 +22,44 @@ command prompt:
                                 |
 
             npm i
+
+session => server storage
+-------  
+npm i express-session
+
+app.session=require('express-session');
+
+create session:
+---------------
+        req.session.--session-name=--session-value
+
+read session:
+-------------
+        req.session.--session-name
+
+delete session:
+---------------
+        req.session.destroy
+
+
+
+cookie=> client storage => frontend
+------
+     
+    npm i cookie-parser
+
+create cookie:
+-------------
+        res.cookie("--cookie-name",--cookie-value)
+
+read cookie:
+------------
+        req.cookie("--cookie-name")
+         or
+        req.cookie.name
+        res.send("some message")
+
+delete cookie:
+-------------
+        res.clearCookie("--cookie-name")
+
