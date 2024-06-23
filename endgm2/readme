@@ -50,6 +50,9 @@ Mongoose connection:
         }
     });
 
-  
+  Encryption and Decryption:
+  --------------------------
+
+  -> npm i passport passport-local passport-local-mongoose mongoose express-session
 
 
