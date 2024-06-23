@@ -19,6 +19,17 @@ const { routes } = require("./app")
 Mongoose connection:
 -------------------
 
-    -> npm i mongoose
+-> npm i mongoose
+
+-> partial search
+    let regex=new RegExp('sai','i')
+    let user= await userModel.find({username:regex})
+
+->only search: start- "^", end- "$"
+    let regex=new RegExp('^sai$','i')
+    let user=await userModel.find({username:regex})
+
+->search for users containing particular category
+    let cat=await userModel.find({categories:{ $all:['peace']}});
 
 

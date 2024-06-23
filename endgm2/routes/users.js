@@ -1,18 +1,18 @@
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/endgm2");
+mongoose.connect("mongodb://127.0.0.1:27017/endgm2");
 
-const userSchema=mongoose.Schema({
-  username:String,
-  nickname:String,
-  description:String,
-  categories:{
-    type:Array,
-    default:[]
+const userSchema = mongoose.Schema({
+  username: String,
+  nickname: String,
+  description: String,
+  categories: {
+    type: Array,
+    default: [],
   },
-  dateCreated:{
+  dateCreated: {
     type: Date,
-    default:Date.now()
-  }
-})
-module.exports=mongoose.model('user',userSchema);
+    default: Date.now(),
+  },
+});
+module.exports = mongoose.model("user", userSchema);
