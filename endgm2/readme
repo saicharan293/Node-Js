@@ -32,4 +32,24 @@ Mongoose connection:
 ->search for users containing particular category
     let cat=await userModel.find({categories:{ $all:['peace']}});
 
+->search for data in between dates
+    var date1=new Date('2024-06-23');
+    var date2=new Date('2024-06-24');
+    let userdate=await userModel.find({dateCreated:{$gte: date1,$lte:date2}});
+
+->search for users existance of category field
+    let cat=await userModel.find({categories:{ $exists:true}});
+
+->search for users with specific field length
+    let cat=await userModel.find({
+        $expr:{
+        $and: [
+            {$gte: [{$strLenCP: '$username'},0]},
+            {$lte: [{$strLenCP:'$username'},3]}
+        ]
+        }
+    });
+
+  
+
 

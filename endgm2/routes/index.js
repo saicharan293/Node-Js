@@ -31,7 +31,35 @@ router.get('/find',async(req,res,next)=>{
 
 //search for users containing particular category
 router.get('/findcategory',async(req,res,next)=>{
-  let cat=await userModel.find({categories:{ $all:['peace']}});
+  let cat=await userModel.find({categories:{ $all:['Html']}});
+  res.send(cat);
+})
+
+//search for data in between dates
+router.get('/finddate',async (req,res,next)=>{
+  var date1=new Date('2024-06-23');
+  var date2=new Date('2024-06-24');
+  let userdate=await userModel.find({dateCreated:{$gte: date1,$lte:date2}});
+  res.send(userdate)
+})
+
+//search for users containing category field
+router.get('/category',async(req,res,next)=>{
+  let cat=await userModel.find({categories:{ $exists:true}});
+  res.send(cat);
+})
+
+
+//search for users with specific field length
+router.get('/len',async(req,res,next)=>{
+  let cat=await userModel.find({
+    $expr:{
+      $and: [
+        {$gte: [{$strLenCP: '$username'},0]},
+        {$lte: [{$strLenCP:'$username'},3]}
+      ]
+    }
+  });
   res.send(cat);
 })
 
