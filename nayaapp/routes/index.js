@@ -11,6 +11,13 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
 
+//profile route
+router.get("/profile",isLoggedIn, function (req, res, next) {
+  res.send("Ye profile page hai");
+});
+
+
+
 //pinterest register
 router.post("/register", (req, res) => {
   const { username, email, fullName } = req.body;
@@ -39,6 +46,14 @@ router.get('/logout',(req,res)=>{
     res.redirect('/');
   })
 })
+
+
+function isLoggedIn(req,res,next){
+  if(req.isAuthenticated()) return next();
+  res.redirect('/')
+}
+
+
 
 //create user
 router.get("/createuser", async function (req, res, next) {
