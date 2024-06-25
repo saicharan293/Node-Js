@@ -32,6 +32,14 @@ router.post(
   function (req, res) {}
 );
 
+//pinterest logout
+router.get('/logout',(req,res)=>{
+  req.logOut(function(err){
+    if(err) return next(err);
+    res.redirect('/');
+  })
+})
+
 //create user
 router.get("/createuser", async function (req, res, next) {
   let user = await userModel.create({
