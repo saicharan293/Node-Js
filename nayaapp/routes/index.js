@@ -3,7 +3,7 @@ var router = express.Router();
 const userModel = require("./users");
 const postModel = require("./post");
 const passport = require("passport");
-const localStrategy=require('passport-local');
+const localStrategy = require("passport-local");
 passport.authenticate(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
@@ -14,15 +14,23 @@ router.get("/", function (req, res, next) {
 //pinterest register
 router.post("/register", (req, res) => {
   const { username, email, fullName } = req.body;
-  let userData = new userModel({username,email,fullName,});
-  userModel.register(userData,req.body.password)
-  .then(function(){
-    passport.authenticate('local')(req,res,function(){
-      res.redirect('/profile')
-    
-    })
-  })
+  let userData = new userModel({ username, email, fullName });
+  userModel.register(userData, req.body.password).then(function () {
+    passport.authenticate("local")(req, res, function () {
+      res.redirect("/profile");
+    });
+  });
 });
+
+//pinterest login
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/profile",
+    failureRedirect: "/",
+  }),
+  function (req, res) {}
+);
 
 //create user
 router.get("/createuser", async function (req, res, next) {
