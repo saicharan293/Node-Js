@@ -4,11 +4,14 @@ const userModel = require("./users");
 const postModel = require("./post");
 const passport = require("passport");
 const localStrategy = require("passport-local");
-passport.authenticate(new localStrategy(userModel.authenticate()));
+passport.use(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
+});
+router.get("/login", function (req, res, next) {
+  res.render("login");
 });
 
 //profile route
