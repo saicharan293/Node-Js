@@ -12,11 +12,9 @@ router.get("/", function (req, res, next) {
 });
 
 //profile route
-router.get("/profile",isLoggedIn, function (req, res, next) {
+router.get("/profile", isLoggedIn, function (req, res, next) {
   res.send("Ye profile page hai");
 });
-
-
 
 //pinterest register
 router.post("/register", (req, res) => {
@@ -40,20 +38,17 @@ router.post(
 );
 
 //pinterest logout
-router.get('/logout',(req,res)=>{
-  req.logOut(function(err){
-    if(err) return next(err);
-    res.redirect('/');
-  })
-})
+router.get("/logout", (req, res) => {
+  req.logOut(function (err) {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+});
 
-
-function isLoggedIn(req,res,next){
-  if(req.isAuthenticated()) return next();
-  res.redirect('/')
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect("/");
 }
-
-
 
 //create user
 router.get("/createuser", async function (req, res, next) {
