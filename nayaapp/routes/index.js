@@ -10,8 +10,15 @@ passport.use(new localStrategy(userModel.authenticate()));
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
 });
+
+//login route
 router.get("/login", function (req, res, next) {
   res.render("login");
+});
+
+//feed page route
+router.get("/feed", function (req, res, next) {
+  res.render("feed");
 });
 
 //profile route
