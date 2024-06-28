@@ -23,7 +23,7 @@ router.get("/feed", function (req, res, next) {
 
 //profile route
 router.get("/profile", isLoggedIn, function (req, res, next) {
-  res.send("Ye profile page hai");
+  res.render("profile");
 });
 
 //pinterest register
@@ -42,7 +42,7 @@ router.post(
   "/login",
   passport.authenticate("local", {
     successRedirect: "/profile",
-    failureRedirect: "/",
+    failureRedirect: "/login",
   }),
   function (req, res) {}
 );
@@ -57,7 +57,7 @@ router.get("/logout", (req, res) => {
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
-  res.redirect("/");
+  res.redirect("/login");
 }
 
 //create user
