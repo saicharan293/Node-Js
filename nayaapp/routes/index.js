@@ -23,8 +23,12 @@ router.get("/feed", function (req, res, next) {
 });
 
 //profile route
-router.get("/profile", isLoggedIn, function (req, res, next) {
-  res.render("profile");
+router.get("/profile", isLoggedIn,async function (req, res, next) {
+  const user=await userModel.findOne({
+    username:req.session.passport.user
+  });
+  console.log(user);
+  res.render("profile",{user});
 });
 
 //pinterest register
@@ -54,7 +58,7 @@ router.post(
 router.get("/logout", (req, res) => {
   req.logOut(function (err) {
     if (err) return next(err);
-    res.redirect("/");
+    res.redirect("/login");
   });
 });
 
