@@ -13,7 +13,8 @@ router.get("/", function (req, res, next) {
 
 //login route
 router.get("/login", function (req, res, next) {
-  res.render("login");
+  // console.log();
+  res.render("login",{error:req.flash('error')});
 });
 
 //feed page route
@@ -43,6 +44,8 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/profile",
     failureRedirect: "/login",
+    failureFlash:true,
+
   }),
   function (req, res) {}
 );
