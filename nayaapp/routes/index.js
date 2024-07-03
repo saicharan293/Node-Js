@@ -3,7 +3,7 @@ var router = express.Router();
 const userModel = require("./users");
 const postModel = require("./post");
 const passport = require("passport");
-const upload=require('./multer');
+const upload = require("./multer");
 const localStrategy = require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
 
@@ -15,7 +15,7 @@ router.get("/", function (req, res, next) {
 //login route
 router.get("/login", function (req, res, next) {
   // console.log();
-  res.render("login",{error:req.flash('error')});
+  res.render("login", { error: req.flash("error") });
 });
 
 //feed page route
@@ -24,12 +24,12 @@ router.get("/feed", function (req, res, next) {
 });
 
 //profile route
-router.get("/profile", isLoggedIn,async function (req, res, next) {
-  const user=await userModel.findOne({
-    username:req.session.passport.user
-  });
+router.get("/profile", isLoggedIn, async function (req, res, next) {
+  const user = await userModel.findOne({
+    username: req.session.passport.user,
+  }).populate('posts');
   console.log(user);
-  res.render("profile",{user});
+  res.render("profile", { user });
 });
 
 //pinterest register
@@ -49,8 +49,7 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/profile",
     failureRedirect: "/login",
-    failureFlash:true,
-
+    failureFlash: true,
   }),
   function (req, res) {}
 );
@@ -69,12 +68,27 @@ function isLoggedIn(req, res, next) {
 }
 
 //upload route
-router.post("/upload", upload.single('file'), function (req, res, next) {
-  if(!req.file){
-    return res.status(404).send('No files were given')
+router.post(
+  "/upload",
+  isLoggedIn,
+  upload.single("file"),
+  async function (req, res, next) {
+    if (!req.file) {
+      return res.status(404).send("No files were given");
+    }
+    const user = await userModel.findOne({
+      username: req.session.passport.user,
+    });
+    const postData=await postModel.create({
+      image:req.file.filename,
+      imageText:req.body.filecaption,
+      user:user._id
+    })
+    user.posts.push(postData._id);
+    await user.save();
+    res.redirect("/profile");
   }
-  res.send("File uploaded successfully");
-});
+);
 
 //create user
 router.get("/createuser", async function (req, res, next) {

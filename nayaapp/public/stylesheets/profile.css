@@ -64,3 +64,23 @@ body {
     background-color: #af040d;
   }
   
+  .upload{
+    margin: .5em;
+  }
+  .submit:hover{
+    background-color: rgb(80, 80, 226);
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  .submit{
+    background-color: rgb(112, 112, 231);
+    color: white;
+    padding: 2px 5px;
+    border: none;
+    border-radius: 5px;
+  }
+  .cards{
+    display: flex;
+    justify-content: space-around;
+  }
