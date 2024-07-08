@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% include ./partials/header.ejs %>
+<div class="w-full h-screen bg-zinc-300 flex items-center justify-center">
+  <div class="w-[30vw]  bg-white px-10 py-10 rounded-[30px]">
+    <h1 class="text-3xl text-center font-semibold text-zinc-700 capitalize tracking-tighter leading-none">Welcome to pinterest</h1>
+    <form action="">
+      <input class="block border-2 rounded-md mt-2 px-3 py-2 w-full" type="text" name="username" id="" placeholder="username">
+      <input class="block border-2 rounded-md mt-2 px-3 py-2 w-full" type="password" name="password" id="" placeholder="password">
+      <a class="mt-2 inline-block font-semibold text-zinc-500" href="#">Forgot password ?</a>
+      <input class="block border-2 mt-2 px-3 py-2 w-full bg-red-600 text-white text-md rounded-full cursor-pointer" type="submit" value="Login">
+      <p class="text-xs font-semibold w-3/4 mx-auto text-zinc-800 mt-6 text-center">By continuing, you agree to Pinterest's Terms of Service and acknowledge you've read our Privacy Policy. Notice at collection.</p>
+    </form>
+  </div> 
+</div>
+<% include ./partials/footer.ejs %>
