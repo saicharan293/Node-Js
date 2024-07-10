@@ -10,6 +10,7 @@ passport.use(new localStrategy(userModel.authenticate()));
 router.get("/", function (req, res, next) {
   res.render("index");
 });
+
 router.get("/register", function (req, res, next) {
   res.render("register");
 });
@@ -19,18 +20,16 @@ router.get("/profile", isLoggedIn, function (req, res, next) {
 });
 
 router.post("/register", function (req, res, next) {
-  // let { username, email, contact } = req.body;
   const data = new userModel({
-    username:req.body.username,
-    email:req.body.email,
-    contact:req.body.contact,
+    username: req.body.username,
+    email: req.body.email,
+    contact: req.body.contact,
   });
   userModel.register(data, req.body.password).then(function () {
     passport.authenticate("local")(req, res, function () {
       res.redirect("/profile");
     });
   });
-  res.render("register");
 });
 
 //login route
