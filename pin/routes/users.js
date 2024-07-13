@@ -14,12 +14,12 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: [],
   },
-  posts:[
+  posts: [
     {
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'post'
-    }
-  ]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "post",
+    },
+  ],
 });
 
 userSchema.plugin(plm);
