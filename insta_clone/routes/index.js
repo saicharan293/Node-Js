@@ -1,9 +1,76 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const userModel=require('./users');
+const passport = require("passport");
+const localStrategy=require('passport-local');
+const upload=require('./multer');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+passport.use(new localStrategy(userModel.authenticate()));
+
+// GET
+router.get("/", function (req, res) {
+  res.render("index", { footer: false });
 });
+
+router.get('/login',function(req,res){
+  res.render('login',{footer:false})
+})
+
+router.get('/feed',isLoggedIn,function(req,res){
+  res.render('feed',{footer:true})
+})
+
+router.get('/profile',isLoggedIn,function(req,res){
+  res.render('profile',{footer:true})
+})
+
+router.get('/search',isLoggedIn,function(req,res){
+  res.render('search',{footer:true})
+})
+
+router.get('/edit',isLoggedIn,function(req,res){
+  res.render('edit',{footer:true})
+})
+
+router.get('/upload',isLoggedIn,function(req,res){
+  res.render('upload',{footer:true})
+})
+
+router.post('/register',function(req,res,next){
+  const user=new userModel({
+    username: req.body.username,
+    fullname:req.body.fullname,
+    email:req.body.email,
+  });
+  userModel.register(user,req.body.password)
+  .then(function(){
+    passport.authenticate('local')(req,res,function(){
+      res.redirect('/profile');
+    });
+  })
+})
+
+router.post('/login',passport.authenticate('local',{
+  successRedirect:'/profile',
+  failureRedirect:'/login'
+}),function(req,res){
+  res.render('upload',{footer:true})
+})
+
+router.post('/logout',function(req,res,next){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
+
+router.post('/update',function(req,res){
+
+})
+
+function isLoggedIn(req,res,next){
+  if(req.isAuthenticated()) return next();
+  res.redirect('/login');
+}
 
 module.exports = router;
