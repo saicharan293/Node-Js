@@ -9,3 +9,8 @@ Started Working on Node js
 
 Node js= Backend
 Express js= middle ware --> routing
+
+Express js:
+-----------
+	It is a npm package, framework
+	It manages everything from receiving the request and giving the response
