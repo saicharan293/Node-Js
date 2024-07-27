@@ -17,6 +17,19 @@ app.get('/',function(req,res){
     res.render("index")
 })
 
+//dynamic routing starts with /: 
+// dyn router 1
+app.get('/profile/:username',function(req,res){
+    res.send(`${req.params.username} aagaya, sher bolthe sher`)
+})
+
+// dyn router 2
+app.get('/profile/:username/:age',function(req,res){
+    res.send(`${req.params.username} aagaya, sher bolthe sher, aur uska umr ${req.params.age}`);
+    //total data sending
+    // res.send(req.params)
+})
+
 app.listen(3000,function(){
     console.log("server shuru")
 })
