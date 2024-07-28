@@ -44,6 +44,12 @@ app.get('/readOne',async (req,res)=>{
     res.send(users)
 })
 
+//delete user
+app.get('/deleteOne',async (req,res)=>{
+    let users=await userModel.findOneAndDelete({name:'charan'});
+    res.send(users)
+})
+
 app.listen(3000,()=>{
     console.log("Server shuru hui")
 })
