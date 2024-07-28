@@ -1,6 +1,7 @@
 const express=require('express');
 const app=express();
 const path=require('path');
+const userModel=require('./models/user')
 
 //practice purpose, not yet used
 app.use(express.json());
@@ -14,8 +15,18 @@ app.get('/',(req,res)=>{
 })
 
 //read 
-app.get('/read',(req,res)=>{
-    res.render("read")
+app.get('/read',async (req,res)=>{
+    let users=await userModel.find()
+    res.render("read",{users})
+})
+
+//create 
+app.post('/create',async (req,res)=>{
+    let {name,email,image}=req.body;
+    let createdUser=await userModel.create({
+        name,email,image
+    })
+    res.redirect('read')
 })
 
 app.listen(3000,()=>{
