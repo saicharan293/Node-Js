@@ -23,6 +23,12 @@ app.get('/create',async (req,res)=>{
     res.send(createdUser)
 })
 
+//update operation
+app.get('/update',async (req,res)=>{
+    let updatedUser=await userModel.findOneAndUpdate({username:'sai'},{name:'sai charan amudala'},{new:true})
+    res.send(updatedUser)
+})
+
 app.listen(3000,()=>{
     console.log("Server shuru hui")
 })
