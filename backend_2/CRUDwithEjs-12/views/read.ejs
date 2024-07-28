@@ -12,6 +12,8 @@
         <a class="text-blue-400 " href="/">Back to home</a>
         <h1 class="text-3xl tracking-tight mb-3 mt-5">All Users</h1>
         <div class="users flex gap-5 flex-wrap">
+            <% if(users.length>0){ %>
+
             <% users.forEach(function(user){ %>
                 <div class="user w-72  p-4 bg-zinc-800 rounded-lg">
                     <div class="w-full h-52 bg-zinc-500 rounded-lg overflow-hidden">
@@ -21,10 +23,14 @@
                     <h5 class="text-zinc-300"><%= user.email %></h5>
                     <div class="flex gap-4 mt-3">
                         <a href="" class="text-yellow-300">Edit user</a>
-                        <a href="" class="text-red-500">Delete user</a>
+                        <a href="/delete/<%= user._id %>" class="text-red-500">Delete user</a>
                     </div>
                 </div>
             <% }) %>
+            <% } else { %>
+                <h3 class="text-zinc-300 text-center w-full">No users yet</h3>
+            <% } %>
+
         </div>
     </div>
 </body>

@@ -20,6 +20,13 @@ app.get('/read',async (req,res)=>{
     res.render("read",{users})
 })
 
+//delete 
+app.get('/delete/:id',async (req,res)=>{
+    let users=await userModel.findOneAndDelete({_id: req.params.id})
+    res.redirect("/read")
+})
+
+
 //create 
 app.post('/create',async (req,res)=>{
     let {name,email,image}=req.body;
