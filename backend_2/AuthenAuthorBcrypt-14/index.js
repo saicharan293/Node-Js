@@ -1,16 +1,24 @@
-const cookieParser = require('cookie-parser');
-const express=require('express');
-const app=express();
-const bcrypt=require('bcrypt');
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const app = express();
+const jwt = require("jsonwebtoken");
 
-//bcrypt => comparison of password with created hash
-app.get('/',(req,res)=>{
-    bcrypt.compare("mypassword", "$2b$10$vphZ7xKymTPCox2bWsiz6.KHAJqT2RYynr8CY0XjKHIWz9Yoi3RbO", function(err, result) {
-        console.log(result);
-    });
-})
-// $2b$10$vphZ7xKymTPCox2bWsiz6.KHAJqT2RYynr8CY0XjKHIWz9Yoi3RbO
+app.use(cookieParser());
 
-app.listen(3000,()=>{
-    console.log("server shuru")
+// encription of user details
+app.get("/", (req, res) => {
+  let token = jwt.sign({ email: "sai@example.com" }, "mysecret");
+  res.cookie("token", token);
+  console.log("token", token);
+  res.send('done')
+});
+
+//decreption of user details
+app.get('/read',function(req,res){
+    let data=jwt.verify(req.cookies.token,"mysecret");
+    console.log("data",data)
 })
+
+app.listen(3000, () => {
+  console.log("server shuru");
+});
