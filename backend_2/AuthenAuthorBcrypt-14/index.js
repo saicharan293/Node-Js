@@ -3,14 +3,13 @@ const express=require('express');
 const app=express();
 const bcrypt=require('bcrypt');
 
-//bcrypt => encryption of password
+//bcrypt => comparison of password with created hash
 app.get('/',(req,res)=>{
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash("mypassword", salt, function(err, hash) {
-            console.log('hash',hash)
-        });
+    bcrypt.compare("mypassword", "$2b$10$vphZ7xKymTPCox2bWsiz6.KHAJqT2RYynr8CY0XjKHIWz9Yoi3RbO", function(err, result) {
+        console.log(result);
     });
 })
+// $2b$10$vphZ7xKymTPCox2bWsiz6.KHAJqT2RYynr8CY0XjKHIWz9Yoi3RbO
 
 app.listen(3000,()=>{
     console.log("server shuru")
