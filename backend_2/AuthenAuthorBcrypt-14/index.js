@@ -1,9 +1,15 @@
+const cookieParser = require('cookie-parser');
 const express=require('express');
 const app=express();
+const bcrypt=require('bcrypt');
 
+//bcrypt => encryption of password
 app.get('/',(req,res)=>{
-    res.cookie("name",'charan')
-    res.send('cookie created')
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash("mypassword", salt, function(err, hash) {
+            console.log('hash',hash)
+        });
+    });
 })
 
 app.listen(3000,()=>{
