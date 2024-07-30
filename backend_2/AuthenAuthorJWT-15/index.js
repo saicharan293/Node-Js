@@ -4,6 +4,8 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const userModel = require("./models/user");
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -16,17 +18,32 @@ app.get("/", (req, res) => {
 });
 
 //create
-app.post("/create", async (req, res) => {
+app.post("/create",  (req, res) => {
   let { username, email, password, age } = req.body;
-  let createdUser = await userModel.create({
-    username,
-    email,
-    password,
-    age,
-  });
-  console.log("created user \n",createdUser)
-  res.send(createdUser);
+  
+  //encrypting the password using bcrypt
+  //salt => some encryption string
+  //hash => salt+password (encrypted password)
+
+  bcrypt.genSalt(10, (err,salt)=>{
+    bcrypt.hash(password,salt,async (err,hash)=>{
+        let createdUser =await  userModel.create({
+                username,
+                email,
+                password:hash,
+                age,
+            });
+        let token=jwt.sign({email},"mysecret");
+        res.cookie("token name",token)
+        res.send(createdUser);
+    })
+  })
+
+
+
 });
+
+
 
 app.listen(3000, () => {
   console.log("server shuru hua");
