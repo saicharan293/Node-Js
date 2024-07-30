@@ -43,6 +43,30 @@ app.post("/create",  (req, res) => {
 
 });
 
+
+//get login route
+app.get('/login',(req,res)=>{
+    res.render('login')
+})
+
+//check (post) login route
+app.post("/login",async (req,res)=>{
+    let user = await userModel.findOne({email: req.body.email})
+    if(!user) return res.send("something went wrong");
+
+    //decrypting the password = bcrypt
+    bcrypt.compare(req.body.password,user.password,(err,result)=>{
+        if(result){
+            //since logged in , user email id need to be saved in cookies
+            let token=jwt.sign({email:user.email},"mysecret");
+            res.cookie("token name",token)
+            res.send("you logged in")
+        }
+        else return res.send("something went wrong")
+    })
+    
+})
+
 //logout route
 app.get('/logout',(req,res)=>{
     res.cookie("token name","")
