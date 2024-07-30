@@ -43,7 +43,11 @@ app.post("/create",  (req, res) => {
 
 });
 
-
+//logout route
+app.get('/logout',(req,res)=>{
+    res.cookie("token name","")
+    res.redirect('/')
+})
 
 app.listen(3000, () => {
   console.log("server shuru hua");
