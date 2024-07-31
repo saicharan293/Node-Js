@@ -18,6 +18,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
 //register route
 app.post("/register", async (req, res) => {
   let { username, fullname, password, age, email } = req.body;
@@ -42,6 +46,21 @@ app.post("/register", async (req, res) => {
       res.send("registration successful!!!");
     });
   });
+});
+
+//login post route
+app.post("/login", async (req, res) => {
+  let { password, email } = req.body;
+  let existingUser = await userModel.findOne({ email });
+  if (!existingUser) return res.status(500).send("Something went wrong");
+
+  //decryption of password
+  
+  bcrypt.compare(password,existingUser.password,(err,result)=>{
+    if(result) res.status(200).send(" Login successfull")
+    else res.redirect('/')
+  })
+  
 });
 
 app.listen(3000, () => console.log("server shuru hui"));
