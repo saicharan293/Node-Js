@@ -6,6 +6,7 @@ const userModel = require("./models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const postModel = require("./models/post");
+const user = require("./models/user");
 
 app.use(cookieParser());
 
@@ -42,7 +43,7 @@ app.post("/register", async (req, res) => {
         {email: email, userid:user._id },
         "mysecret"
       );
-      res.cookie("token name", token);
+      res.cookie("token", token);
       res.send("registration successful!!!");
     });
   });
@@ -55,12 +56,33 @@ app.post("/login", async (req, res) => {
   if (!existingUser) return res.status(500).send("Something went wrong");
 
   //decryption of password
-  
+
   bcrypt.compare(password,existingUser.password,(err,result)=>{
-    if(result) res.status(200).send(" Login successfull")
+    if(result){
+        let token=jwt.sign({email:email,userid:user._id},"mysecret");
+        res.cookie("token",token);
+        res.status(200).send(" Login successfull");
+    } 
     else res.redirect('/')
   })
   
 });
+
+
+//logout route
+app.get("/logout", (req, res) => {
+    res.cookie("token","");
+    res.redirect("/login")
+});
+
+//setting up middle ware (next())
+function isLoggedIn(req,res,next){
+    if(req.cookies.token==="") res.send("you must login")
+    else{
+        let data=jwt.verify(req.cookies.token,"mysecret")
+        req.user=data;
+    } 
+    next();
+}
 
 app.listen(3000, () => console.log("server shuru hui"));
