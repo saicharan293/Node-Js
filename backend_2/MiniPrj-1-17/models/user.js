@@ -1,14 +1,18 @@
-const { name } = require('ejs');
-const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/miniproject');
+const mongoose = require("mongoose");
 
-const user=mongoose.Schema({
-    username:String,
-    fullname:String,
-    age:Number,
-    email:String,
-    password:String
-})
+mongoose.connect("mongodb://127.0.0.1:27017/miniproject");
 
-module.exports=mongoose.model('user',user)
+const user = mongoose.Schema({
+  username: String,
+  fullname: String,
+  age: Number,
+  email: String,
+  password: String,
+  posts:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'post'
+  }]
+});
+
+module.exports = mongoose.model("user", user);
