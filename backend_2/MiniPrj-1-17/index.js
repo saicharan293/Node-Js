@@ -2,6 +2,8 @@ const express=require('express');
 const app=express();
 const path=require('path');
 const cookieParser = require('cookie-parser');
+const userModel=require('./models/user');
+
 app.use(cookieParser());
 
 app.set('view engine','ejs');
