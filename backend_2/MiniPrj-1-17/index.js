@@ -23,6 +23,12 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+//profile route
+app.get("/profile",isLoggedIn, (req, res) => {
+    console.log(req.user);
+    res.send("profile per swagat hai");
+});
+
 //register route
 app.post("/register", async (req, res) => {
   let { username, fullname, password, age, email } = req.body;
