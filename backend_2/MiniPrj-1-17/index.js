@@ -25,9 +25,20 @@ app.get("/login", (req, res) => {
 
 //profile route
 app.get("/profile", isLoggedIn, async (req, res) => {
-  let user = await userModel.findOne({ email: req.user.email });
-  console.log(user);
+  let user = await userModel.findOne({ email: req.user.email }).populate('posts');
   res.render("profile", { user });
+});
+
+//post route
+app.post("/post", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  let post = await postModel.create({
+    user: user._id,
+    content:req.body.content,
+  })
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect('/profile')
 });
 
 //register route
