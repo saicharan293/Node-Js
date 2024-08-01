@@ -25,8 +25,7 @@ app.get("/login", (req, res) => {
 
 //profile route
 app.get("/profile",isLoggedIn, (req, res) => {
-    console.log(req.user);
-    res.send("profile per swagat hai");
+    res.render("profile")
 });
 
 //register route
@@ -67,7 +66,7 @@ app.post("/login", async (req, res) => {
     if(result){
         let token=jwt.sign({email:email,userid:user._id},"mysecret");
         res.cookie("token",token);
-        res.status(200).send(" Login successfull");
+        res.status(200).redirect("/profile");
     } 
     else res.redirect('/')
   })
@@ -83,7 +82,7 @@ app.get("/logout", (req, res) => {
 
 //setting up middle ware (next())
 function isLoggedIn(req,res,next){
-    if(req.cookies.token==="") res.send("you must login")
+    if(req.cookies.token==="") res.redirect("/login")
     else{
         let data=jwt.verify(req.cookies.token,"mysecret")
         req.user=data;
