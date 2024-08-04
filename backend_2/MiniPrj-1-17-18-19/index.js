@@ -7,8 +7,24 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const postModel = require("./models/post");
 const user = require("./models/user");
+const multer=require('multer');
+const crypto=require('crypto');
 
 app.use(cookieParser());
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/uploads')
+  },
+  filename: function (req, file, cb) {
+    crypto.randomBytes(12,function(err,bytes){
+      const fn=bytes.toString('hex')+path.extname(file.originalname)
+      cb(null, fn)
+    })
+  }
+})
+
+const upload = multer({ storage: storage })
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -17,6 +33,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+//get route for test
+app.get("/test", (req, res) => {
+  res.render("test");
+});
+
+//post route for test
+app.post("/upload", upload.single('image') , (req, res) => {
+  console.log(req.file);
+  // res.render("test");
 });
 
 app.get("/login", (req, res) => {
