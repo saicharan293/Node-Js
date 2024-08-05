@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <div class="w-full min-h-screen bg-zinc-900 text-white p-10">
+    <div class="relative w-full min-h-screen bg-zinc-900 text-white p-10">
         <h3 class="text-3xl mb-5">Create Account</h3>
+        <a class="absolute mt-2 px-3 py-2 top-40 bg-yellow-500 text-black rounded-md cursor-pointer" href="/login">Login</a>
+
         <form action="/register" method="post"> 
             <input class="px-3 py-2 outline-none rounded-md bg-transparent border-2 border-zinc-800" type="text" name="fullname" placeholder="fullname" id="">
             <input class="px-3 py-2 outline-none rounded-md bg-transparent border-2 border-zinc-800" type="text" name="username" placeholder="username" id="">

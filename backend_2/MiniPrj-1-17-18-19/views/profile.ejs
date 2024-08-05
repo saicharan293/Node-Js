@@ -16,9 +16,12 @@
           >Logout</a
         >
       </div>
-      <h3 class="text-3xl">
-        <span class="font-light">Hello</span>, <%= user.fullname %>👋
-      </h3>
+      <div class="flex gap-2 items-start mb-3">
+        <div class="w-10 h-10 bg-red-500 rounded-md"><img src="/images/uploads/default.jpeg" alt=""></div>
+        <h3 class="text-3xl">
+          <span class="font-light">Hello</span>, <%= user.fullname %>👋
+        </h3>
+      </div>
       <h5 class="mb-5">You can create a new post.</h5>
       <form action="/post" method="post">
         <textarea
