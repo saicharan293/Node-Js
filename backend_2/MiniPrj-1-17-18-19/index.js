@@ -7,9 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const postModel = require("./models/post");
 const user = require("./models/user");
-const crypto=require('crypto');
-const multer=require('./config/multer');
- 
+const upload = require("./config/multerfile");
 
 app.use(cookieParser());
 
@@ -22,7 +20,18 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+//get route for uploading dp
+app.get("/profile/upload", (req, res) => {
+  res.render("profileupload");
+});
 
+//post route for uploading dp
+app.post("/upload",isLoggedIn, upload.single("image"),async (req, res) => {
+  let user=await userModel.findOne({email:req.user.email})
+  user.profilepicture=req.file.filename;
+  await user.save()
+  res.redirect('/profile')
+});
 
 app.get("/login", (req, res) => {
   res.render("login");
@@ -30,18 +39,19 @@ app.get("/login", (req, res) => {
 
 //profile route
 app.get("/profile", isLoggedIn, async (req, res) => {
-  let user = await userModel.findOne({ email: req.user.email }).populate('posts');
+  let user = await userModel
+    .findOne({ email: req.user.email })
+    .populate("posts");
   res.render("profile", { user });
 });
 
 //like route
 app.get("/like/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOne({ _id: req.params.id }).populate('user');
-  if(post.likes.indexOf(req.user.userid)=== -1){
-    post.likes.push(req.user.userid)
-  }
-  else{
-    post.likes.splice(post.likes.indexOf(req.user.userid),1)
+  let post = await postModel.findOne({ _id: req.params.id }).populate("user");
+  if (post.likes.indexOf(req.user.userid) === -1) {
+    post.likes.push(req.user.userid);
+  } else {
+    post.likes.splice(post.likes.indexOf(req.user.userid), 1);
   }
   await post.save();
   // console.log("change" ,post.likes.indexOf(req.user.userid))
@@ -50,14 +60,17 @@ app.get("/like/:id", isLoggedIn, async (req, res) => {
 
 //edit get route
 app.get("/edit/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOne({ _id: req.params.id }).populate('user');
-  res.render('edit',{post})
+  let post = await postModel.findOne({ _id: req.params.id }).populate("user");
+  res.render("edit", { post });
 });
 
 //edit update route
 app.post("/update/:id", isLoggedIn, async (req, res) => {
-  let post = await postModel.findOneAndUpdate({ _id: req.params.id },{content:req.body.content});
-  res.redirect('/profile')
+  let post = await postModel.findOneAndUpdate(
+    { _id: req.params.id },
+    { content: req.body.content }
+  );
+  res.redirect("/profile");
 });
 
 //post route
@@ -65,11 +78,11 @@ app.post("/post", isLoggedIn, async (req, res) => {
   let user = await userModel.findOne({ email: req.user.email });
   let post = await postModel.create({
     user: user._id,
-    content:req.body.content,
-  })
+    content: req.body.content,
+  });
   user.posts.push(post._id);
   await user.save();
-  res.redirect('/profile')
+  res.redirect("/profile");
 });
 
 //register route
