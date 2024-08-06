@@ -1,0 +1,4 @@
+
+
+
+this is demo for readFile function in fs module
