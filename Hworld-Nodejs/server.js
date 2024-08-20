@@ -1,14 +1,13 @@
-const jsonString='{"name":"John","age":30,"city":"New York"}';
+const express = require('express')
+const app = express()
 
-// JSON.parse() is used to convert a (JSON-formatted) string into a JavaScript object.
+app.get('/', function (req, res) {
+  res.send('Heyy, what do you like to eat? ')
+})
 
-const jsonObject=JSON.parse(jsonString);
-console.log('json object name is ',jsonObject.name);
+app.get('/idli', function (req, res) {
+  res.send('I would serve Idli ')
+})
 
-
-// JSON.stringify() is used to convert a JavaScript object into a (JSON-formatted) string.
-const objectToConvert={name:"alice",age:24};
-const jsonStringified=JSON.stringify(objectToConvert);
-console.log(jsonStringified)
-console.log('type of jsonObject',typeof(jsonObject))
+app.listen(3000)
 
