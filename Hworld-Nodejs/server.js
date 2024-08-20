@@ -10,4 +10,5 @@ console.log('json object name is ',jsonObject.name);
 const objectToConvert={name:"alice",age:24};
 const jsonStringified=JSON.stringify(objectToConvert);
 console.log(jsonStringified)
+console.log('type of jsonObject',typeof(jsonObject))
 
