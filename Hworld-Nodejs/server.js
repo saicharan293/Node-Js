@@ -4,7 +4,8 @@ const bodyParser=require('body-parser');
 app.use(bodyParser.json());
 
 const db=require('./db');
-const personModel=require('./models/Person')
+const personModel=require('./models/Person');
+const Menu = require('./models/Menu');
 
 
 app.get('/', function (req, res) {
@@ -36,6 +37,35 @@ app.get('/person',async (req,res)=>{
     res.status(500).json({err:'Internal server error'})
   }
 })
+
+
+//post menuModel
+app.post('/menu',async function(req,res){
+  try{
+    const menuData=req.body;
+    const menu=new Menu(menuData);
+    const response=await menu.save();
+    res.status(200).json(response);
+  }catch(err){
+    console.log(err);
+    res.status(500).json({err:'Internal Server Error'})
+  }
+})
+
+
+//get menu
+
+app.get('/menu',async function(req,res){
+  try{
+    const menu=await Menu.find();
+    console.log('menu fetched');
+    res.status(200).json(menu);
+  }catch(err){
+    console.log(err)
+    res.status(500).json({err:'Internal server error'})
+  }
+}
+)
 
 app.listen(3000,()=>{
   console.log('server shuru')
