@@ -67,6 +67,48 @@ app.get('/menu',async function(req,res){
 }
 )
 
+//trial post menu2
+// app.post('/menu2',async function(req,res){
+//   try{
+//     const menudata2=req.body;
+//     const menudb2=new Menu(menudata2);
+//     const response=await menudb2.save();
+//     res.status(200).json(response);
+//   }catch(err){
+//     console.log(err);
+//     res.status(500).json({err:'Internal server error'})
+//   }
+// })
+
+//trial get menu 2
+// app.get('/menu2',async function(req,res){
+//   try{
+//     const menudata2=await Menu.find()
+//     res.status(200).json(menudata2)
+//   }catch(err){
+//     console.log(err);
+//     res.status(500).json({err:'Internal server error'})
+//   }
+// })
+
+//params
+app.get('/person/:worktype',async (req,res)=>{
+  try{
+    const workType=req.params.worktype
+    if(workType=='chef'|| workType=='manager'||workType=='waiter'){
+      const response=await personModel.find({work:workType});
+      console.log('response fetched');
+      res.status(200).json(response)
+    }else{
+      res.status(404).json({error:'Invalid work type'})
+    }
+  }catch(err){
+    console.log(err);
+    res.status(500).json({err:'Internal server error'});
+  }
+})
+
+
 app.listen(3000,()=>{
   console.log('server shuru')
 })
