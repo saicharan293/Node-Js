@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser=require('body-parser');
 app.use(bodyParser.json());
+require('dotenv').config();
 
 const db=require('./db');
 const personModel=require('./models/Person');
@@ -47,9 +48,9 @@ app.use('/menu',menuRoutes);
 // })
 
 
+const PORT=process.env.PORT||3000
 
-
-app.listen(3000,()=>{
+app.listen(PORT,()=>{
   console.log('server shuru')
 })
 
