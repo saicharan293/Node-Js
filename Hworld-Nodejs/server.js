@@ -9,8 +9,15 @@ const personModel=require('./models/Person');
 const Menu = require('./models/Menu');
 
 
+const logRequest=(req,res,next)=>{
+  console.log(`${new Date().toLocaleString()} Request made to : ${req.originalUrl}`)
+  next();
+}
+
+app.use(logRequest);
 app.get('/', function (req, res) {
-  res.send('Heyy, what do you like to eat? ')
+  res.send('Heyy, what do you like to eat? ');
+
 })
 
 

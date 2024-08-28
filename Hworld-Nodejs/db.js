@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
+require("dotenv").config();
 
 // const mongoUrl='mongodb://127.0.0.1/hworld-hotels'
 //hide local url
 //const mongoUrl=process.env.mongoUrl_local
 //web hosting for mongo
 // const mongoUrl ="mongodb+srv://saicharan:shivaay123@mymongo.uv55x.mongodb.net/";
-const mongoUrl=process.env.mongoUrl;
+const mongoUrl = process.env.mongoUrl;
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
