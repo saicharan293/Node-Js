@@ -7,6 +7,9 @@ require('dotenv').config();
 const db=require('./db');
 const personModel=require('./models/Person');
 const Menu = require('./models/Menu');
+const passport=require('passport');
+const localStrategy=require('passport-local').Strategy;
+
 
 
 const logRequest=(req,res,next)=>{
@@ -15,7 +18,25 @@ const logRequest=(req,res,next)=>{
 }
 
 app.use(logRequest);
-app.get('/', function (req, res) {
+passport.use(new localStrategy(async (username,password,done)=>{
+  try {
+    console.log('Received credentials:',username,password);
+    const user=await personModel.findOne({username:username});
+    if(!user) return done(null,false,{message:'Incorrect username.'})
+    const isPassword=(user.password==password)?true:false;
+    if(isPassword){
+      return done(null,user);
+    }else{
+      return done(null, false,{message:'Incoorect password'})
+    }
+  } catch (error) {
+    
+  }
+}))
+
+app.use(passport.initialize());
+
+app.get('/',passport.authenticate('local',{session:false}), function (req, res) {
   res.send('Heyy, what do you like to eat? ');
 
 })
