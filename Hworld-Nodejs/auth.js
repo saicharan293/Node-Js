@@ -5,7 +5,7 @@ const personModel=require('./models/Person')
 
 passport.use(new localStrategy(async(username,password,done)=>{
     try {
-        console.log('Received Credentials:',username,password);
+        // console.log('Received Credentials:',username,password);
         const user=await personModel.findOne({username:username});
         if(!user) return done(null, false,{message:'Incorrect username.'})
         const isPassword=(user.password==password)?true:false;

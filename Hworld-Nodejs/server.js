@@ -33,7 +33,7 @@ const personRoutes=require('./routes/personRouter');
 //Import menu routes
 const menuRoutes=require('./routes/menuRouter');
 
-app.use('/person',personRoutes);
+app.use('/person',localAuthMiddleware,personRoutes);
 app.use('/menu', localAuthMiddleware,menuRoutes);
 
 const PORT=process.env.PORT||3000
