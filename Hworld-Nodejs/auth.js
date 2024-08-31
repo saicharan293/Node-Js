@@ -1,11 +1,11 @@
 const passport=require('passport');
 const localStrategy=require('passport-local').Strategy;
 const personModel=require('./models/Person')
-const express=require('express');
-const app=express()
+
+
 passport.use(new localStrategy(async(username,password,done)=>{
     try {
-        console.log('Received Credentials:',username,psasword);
+        console.log('Received Credentials:',username,password);
         const user=await personModel.findOne({username:username});
         if(!user) return done(null, false,{message:'Incorrect username.'})
         const isPassword=(user.password==password)?true:false;
@@ -16,7 +16,6 @@ passport.use(new localStrategy(async(username,password,done)=>{
     }
 }))
 
-app.use(passport.initialize());
-const localAuthMiddleware=passport.authenticate('local',{session:false});
 
-module.exports=localAuthMiddleware
+
+module.exports=passport;

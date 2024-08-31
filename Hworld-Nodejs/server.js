@@ -7,9 +7,9 @@ require('dotenv').config();
 const db=require('./db');
 const personModel=require('./models/Person');
 const Menu = require('./models/Menu');
-const localAuthMiddleware=require('./auth');
-const passport=require('passport');
-const localStrategy=require('passport-local').Strategy;
+const passport=require('./auth');
+// const passport=require('passport');
+// const localStrategy=require('passport-local').Strategy;
 
 
 
@@ -17,6 +17,9 @@ const logRequest=(req,res,next)=>{
   console.log(`${new Date().toLocaleString()} Request made to : ${req.originalUrl}`)
   next();
 }
+
+app.use(passport.initialize());
+const localAuthMiddleware=passport.authenticate('local',{session:false});
 
 app.use(logRequest);
 app.get('/', function (req, res) {
