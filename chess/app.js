@@ -22,7 +22,12 @@ app.get('/',(req,res)=>{
 })
 
 io.on('connection',function(uniqueSocket){
-    console.log('connected')
+    console.log('connected');
+    
+    uniqueSocket.on('charan',function(){
+        // console.log('charan received');
+        io.emit('charan is here');
+    })
 })
 
 server.listen(3000,function(){
