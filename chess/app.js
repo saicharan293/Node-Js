@@ -3,6 +3,7 @@ const socket = require("socket.io");
 const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
+const { log } = require("console");
 
 const app = express();
 
@@ -23,10 +24,8 @@ app.get('/',(req,res)=>{
 
 io.on('connection',function(uniqueSocket){
     console.log('connected');
-    
-    uniqueSocket.on('charan',function(){
-        // console.log('charan received');
-        io.emit('charan is here');
+    uniqueSocket.on('disconnect',function(){
+        console.log('disconnected');
     })
 })
 
