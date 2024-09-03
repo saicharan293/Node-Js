@@ -3,7 +3,6 @@ const socket = require("socket.io");
 const http = require("http");
 const { Chess } = require("chess.js");
 const path = require("path");
-const { log } = require("console");
 
 const app = express();
 
