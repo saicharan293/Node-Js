@@ -1,0 +1,58 @@
+const { routes } = require("./app")
+
+-> npm i express-session
+
+-> flash messages: can be used for transportation of data accross routes
+---------------
+
+        npm i connect-flash
+
+    create-flash:
+    req.flash('--name','value')
+
+    check-flash message:
+    console.log(req.flash('--name'))
+
+    multiple flashes:
+    console.log(req.flash('age'),req.flash('name'))
+
+Mongoose connection:
+-------------------
+
+-> npm i mongoose
+
+-> partial search
+    let regex=new RegExp('sai','i')
+    let user= await userModel.find({username:regex})
+
+->only search: start- "^", end- "$"
+    let regex=new RegExp('^sai$','i')
+    let user=await userModel.find({username:regex})
+
+->search for users containing particular category
+    let cat=await userModel.find({categories:{ $all:['peace']}});
+
+->search for data in between dates
+    var date1=new Date('2024-06-23');
+    var date2=new Date('2024-06-24');
+    let userdate=await userModel.find({dateCreated:{$gte: date1,$lte:date2}});
+
+->search for users existance of category field
+    let cat=await userModel.find({categories:{ $exists:true}});
+
+->search for users with specific field length
+    let cat=await userModel.find({
+        $expr:{
+        $and: [
+            {$gte: [{$strLenCP: '$username'},0]},
+            {$lte: [{$strLenCP:'$username'},3]}
+        ]
+        }
+    });
+
+  Encryption and Decryption:
+  --------------------------
+
+  -> npm i passport passport-local passport-local-mongoose mongoose express-session
+
+

@@ -1,0 +1,65 @@
+express js
+install express js
+express js boiler plate code
+    copy boiler plate code from npm website
+    
+express js ejs setup
+    install ejs
+    set view engine
+    create views folder
+    create ejs files
+    render ejs files inside route
+express static files setup
+architecture of public folder
+
+Steps for express generator:
+----------------------------
+npm i express-generator -g
+command prompt:
+        express -app-name --view=ejs
+
+        go to that --app-name ---
+                                |
+
+            npm i
+
+session => server storage
+-------  
+npm i express-session
+
+app.session=require('express-session');
+
+create session:
+---------------
+        req.session.--session-name=--session-value
+
+read session:
+-------------
+        req.session.--session-name
+
+delete session:
+---------------
+        req.session.destroy
+
+
+
+cookie=> client storage => frontend
+------
+     
+    npm i cookie-parser
+
+create cookie:
+-------------
+        res.cookie("--cookie-name",--cookie-value)
+
+read cookie:
+------------
+        req.cookie("--cookie-name")
+         or
+        req.cookie.name
+        res.send("some message")
+
+delete cookie:
+-------------
+        res.clearCookie("--cookie-name")
+
